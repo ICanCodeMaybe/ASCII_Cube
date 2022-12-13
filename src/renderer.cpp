@@ -1,4 +1,5 @@
 #include "renderer.h"
+#include "core.h"
 
 #include <cmath>
 #include <iostream>
@@ -58,7 +59,10 @@ void Renderer::SetCursorPos(std::string& text, math::Vec2 pos){
 }
 
 void Renderer::Write(const char* text, math::Vec2 pos, int foreground_color, int background_color, int formating){
-	std::string final_string = text;
+	
+	std::stringstream ss;
+	ss << text;
+	std::string final_string = ss.str();
 
 	Renderer::SetCursorPos(final_string, pos);
 
@@ -73,30 +77,42 @@ void Renderer::Clear(){
 	Renderer::Write(CLEAR_SCREEN);
 }
 
-void Renderer::DrawLine( math::Vec2 begining, math::Vec2 end, char filling, int foreground_color, int background_color){
+void Renderer::DrawLine( math::Vec2 begining, math::Vec2 end, const char* filling, int foreground_color, int background_color){
 	
 	//sides in right angled triangle 
 	float a =std::abs(begining.y - end.y);
 	float b =std::abs(begining.x - end.x);
+		
+	bool positive_x = (begining.x < end.x)? true : false;
+	bool positive_y = (begining.y < end.y)? true : false;
 
 	int x = 0;
 	int y = 0;
 
 	//nuber of repeats in my algorithm
 	int repeats =(a > b)? a : b;
-	
-	for(int step = 0; step < repeats; step++){
-		if(LineMoveOnX(a, b, step))
-			x++;
-		
-		if(LineMoveOnY(a, b, step))
-			y++;
-		
-		Renderer::Write(&filling, {begining.x + x , begining.y + y}, foreground_color, background_color);
+	int relative_step_x = 0;
+	int relative_step_y = 0;
 
-		std::stringstream ss;
-		ss << "X: "<< x << ",Y" << y;
-		Renderer::Write(ss.str().c_str(), {0, 18});
+	for(int step = 1; step <= repeats; step++){
+		if(LineMoveOnX(a, b, relative_step_x)){
+			(positive_x)? x++ : x--;
+			relative_step_x = 0;
+		}
+
+		if(LineMoveOnY(a, b, relative_step_y)){
+			(positive_y)? y++ : y --;
+			relative_step_y = 0;
+		}
+		
+		relative_step_x++;
+		relative_step_y++;
+	
+		Renderer::Write(filling, {begining.x + x , begining.y + y}, foreground_color, background_color);
+	
+	//	std::stringstream ss;
+	//	ss << "Time: " << Core::GetCore()->GetTime() << "\nDelta time : " << Core::GetCore()->delta_time;
+	//	Renderer::Write(ss.str().c_str(), {0, 18});
 	}
 
 }

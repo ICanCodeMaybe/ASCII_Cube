@@ -11,7 +11,16 @@ public:
 	static void SignalHandler(int signal_num);	
 	static void MainLoop();
 
+	static float GetTime();
+
+	static float delta_time;
+	
+	static int fps;
 private:
+	static float current_time;
+	static float end_time;
+
+	static float start_time;
 
 	static bool app_should_close;
 };

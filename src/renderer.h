@@ -28,7 +28,7 @@ public:
 	
 	void Clear();
 	
-	void DrawLine(math::Vec2 begining, math::Vec2 end, char filling = 'X', int foreground_color = NORMAL, int background_color = NORMAL);
+	void DrawLine(math::Vec2 begining, math::Vec2 end, const char* filling = "X", int foreground_color = NORMAL, int background_color = NORMAL);
 	
 //	void DrawLine(math::Vec2 &begining, int *lenght, int &angle, char filling = 'X', int foreground_color = NORMAL, int background_color = NORMAL);
 
