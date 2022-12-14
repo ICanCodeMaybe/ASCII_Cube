@@ -1,3 +1,3 @@
 # ASCII_Cube
 
-I will hopefully, see cube from ascii characters on srcreen one day. But i'am workin on this
+Currently i'm developing basics, for my "ascii engine", so its more abstracted. At the end, i would like to be able to draw cube at the screen.
