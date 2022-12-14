@@ -7,6 +7,7 @@
 #include "core.h"
 #include "renderer.h"
 #include "textFormating.h"
+#include "loger.h"
 
 Core* Core::s_instance = nullptr;
 bool Core::app_should_close = false;
@@ -38,7 +39,10 @@ void Core::MainLoop(){
 			
 
 			Renderer::GetRenderer()->DrawLine({30,20}, {std::sin(GetTime()) * 10 + 30, std::cos(GetTime()) * 10 + 20}, "X");
-		
+	
+			Renderer::GetRenderer()->DrawTriangle({1,1},{60,3},{10,30});
+			
+
 			std::stringstream ss;
 			ss << "Time: " << Core::GetCore()->GetTime() << "\n";
 			Renderer::GetRenderer()->Write(ss.str().c_str(), {0, 30});
@@ -62,5 +66,10 @@ void Core::SignalHandler(int signal_num){
 
 float Core::GetTime(){
 	return (float)(clock() - Core::start_time)/CLOCKS_PER_SEC;
+}
+
+void Core::Close(){
+	app_should_close = true;
+	SignalHandler(1);
 }
 

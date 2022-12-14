@@ -10,6 +10,7 @@ public:
 	static Core* GetCore();
 	static void SignalHandler(int signal_num);	
 	static void MainLoop();
+	static void Close();
 
 	static float GetTime();
 

@@ -35,6 +35,8 @@ public:
 	void Write(const char* text, math::Vec2 pos = {0.0f, 0.0f}, int foreground_color = NORMAL, int background_color = NORMAL, int formating = 10);
 
 
+	void DrawTriangle(math::Vec2 A, math::Vec2 B, math::Vec2 C);
+
 private:
 
 	void SetCursorPos(std::string& text, math::Vec2 pos);

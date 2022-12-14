@@ -94,7 +94,7 @@ void Renderer::DrawLine( math::Vec2 begining, math::Vec2 end, const char* fillin
 	int relative_step_x = 0;
 	int relative_step_y = 0;
 
-	for(int step = 1; step <= repeats; step++){
+	for(int step = 0; step <= repeats; step++){
 		if(LineMoveOnX(a, b, relative_step_x)){
 			(positive_x)? x++ : x--;
 			relative_step_x = 0;
@@ -110,9 +110,6 @@ void Renderer::DrawLine( math::Vec2 begining, math::Vec2 end, const char* fillin
 	
 		Renderer::Write(filling, {begining.x + x , begining.y + y}, foreground_color, background_color);
 	
-	//	std::stringstream ss;
-	//	ss << "Time: " << Core::GetCore()->GetTime() << "\nDelta time : " << Core::GetCore()->delta_time;
-	//	Renderer::Write(ss.str().c_str(), {0, 18});
 	}
 
 }
@@ -143,4 +140,8 @@ bool Renderer::LineMoveOnY(float a, float b, int step){
 
 //-------TRIANGLES---------------
 
-
+void Renderer::DrawTriangle(math::Vec2 A, math::Vec2 B, math::Vec2 C){
+	DrawLine(A, B);
+	DrawLine(A, C);
+	DrawLine(B, C);
+}
