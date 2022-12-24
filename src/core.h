@@ -1,7 +1,9 @@
 #ifndef CORE_H
 #define CORE_H
 
-
+namespace math{
+	class Vec2;
+}
 
 class Core{
 private:
@@ -15,6 +17,8 @@ public:
 	static void Close();
 	static void SetWidthHeight(int width, int height){s_width = width; s_height=height;}
 	static float GetTime();
+
+	static math::Vec2 GetSize();
 
 	static float delta_time;
 	

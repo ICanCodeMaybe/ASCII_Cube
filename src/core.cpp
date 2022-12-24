@@ -31,7 +31,9 @@ Core* Core::GetCore(){
 	return s_instance;
 }
 
-
+math::Vec2 Core::GetSize(){
+	return {Core::s_width, Core::s_height};
+}
 void Core::MainLoop(){
 
 	while(!app_should_close){
@@ -43,14 +45,15 @@ void Core::MainLoop(){
 			Renderer::GetRenderer()->Clear();
 			
 
-			Renderer::GetRenderer()->DrawLine({30,20}, {std::sin(GetTime()) * 10 + 30, std::cos(GetTime()) * 10 + 20}, "X");
+			Renderer::GetRenderer()->DrawLine({0.5,0.5}, {std::sin(GetTime())/5 + 0.2, std::cos(GetTime()) / 5 + 0.15}, "X");
 	
-			Renderer::GetRenderer()->DrawTriangle({1,1},{60,3},{10,30});
+			Renderer::GetRenderer()->DrawTriangle({1,1},{0,0},{1,0});
 			
+			Renderer::GetRenderer()->WriteReratively("uprostred",{0.5f, 0.5f});
 			
 			std::stringstream ss;
 			ss << "Time: " << Core::GetCore()->GetTime() <<", Width: " << Core::s_width<< ", Height:"<< s_height<<"\n";
-			Renderer::GetRenderer()->Write(ss.str().c_str(), {0, 30});
+			Renderer::GetRenderer()->WriteDirectly(ss.str().c_str(), {0, 30});
 			end_time = GetTime();
 
 		}
@@ -63,9 +66,9 @@ void Core::SignalHandler(int signal_num){
 	Core::app_should_close = true;
 	
 	Renderer::GetRenderer()->Clear();
-	Renderer::GetRenderer()->Write("Have a nice day!", {0,0}, NORMAL, NORMAL);
+	Renderer::GetRenderer()->WriteDirectly("Have a nice day!", {0,0}, NORMAL, NORMAL);
 	
-	Renderer::GetRenderer()->Write("The program has sucessfully terminated ;]\n", {0, 0});
+	Renderer::GetRenderer()->WriteDirectly("The program has sucessfully terminated ;]\n", {0, 0});
 	
 	std::exit(signal_num);
 }

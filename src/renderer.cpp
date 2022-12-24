@@ -58,7 +58,7 @@ void Renderer::SetCursorPos(std::string& text, math::Vec2 pos){
 	text.insert(0, ansi_code.str());
 }
 
-void Renderer::Write(const char* text, math::Vec2 pos, int foreground_color, int background_color, int formating){
+void Renderer::WriteDirectly(const char* text, math::Vec2 pos, int foreground_color, int background_color, int formating){
 	
 	std::stringstream ss;
 	ss << text;
@@ -73,12 +73,18 @@ void Renderer::Write(const char* text, math::Vec2 pos, int foreground_color, int
 	std::cout << final_string << NORMAL_TEXT << BACKGROUND_NORMAL;
 }
 
+void Renderer::WriteReratively(const char* text, math::Vec2 pos, int foreground_color, int background_color, int formating){
+	Renderer::WriteDirectly(text, Renderer::ConvertToScreen(pos), foreground_color, background_color,formating);
+}
+
 void Renderer::Clear(){
-	Renderer::Write(CLEAR_SCREEN);
+	Renderer::WriteDirectly(CLEAR_SCREEN);
 }
 
 void Renderer::DrawLine( math::Vec2 begining, math::Vec2 end, const char* filling, int foreground_color, int background_color){
 	
+	begining = ConvertToScreen(begining);
+	end = ConvertToScreen(end);
 	//sides in right angled triangle 
 	float a =std::abs(begining.y - end.y);
 	float b =std::abs(begining.x - end.x);
@@ -108,12 +114,12 @@ void Renderer::DrawLine( math::Vec2 begining, math::Vec2 end, const char* fillin
 		relative_step_x++;
 		relative_step_y++;
 	
-		Renderer::Write(filling, {begining.x + x , begining.y + y}, foreground_color, background_color);
+		Renderer::WriteDirectly(filling, {begining.x + x , begining.y + y}, foreground_color, background_color);
 	
 	}
 
 }
-
+//-------------private-------------------
 bool Renderer::LineMoveOnX(float a, float b, int step){
 	//ratio of sides in triangle
 	float ratio = b/a;
@@ -136,6 +142,15 @@ bool Renderer::LineMoveOnY(float a, float b, int step){
 		return true;
 	else
 		return false;
+}
+math::Vec2 Renderer::ConvertToScreen(math::Vec2 vec){
+if(Core::GetCore()->GetSize().GetX() != -1){
+	float width = Core::GetCore()->GetSize().x * vec.x;
+	float height = Core::GetCore()->GetSize().y *vec.y;
+	return {width, height};
+}
+else
+	return vec; 
 }
 
 //-------TRIANGLES---------------

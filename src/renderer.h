@@ -32,8 +32,8 @@ public:
 	
 //	void DrawLine(math::Vec2 &begining, int *lenght, int &angle, char filling = 'X', int foreground_color = NORMAL, int background_color = NORMAL);
 
-	void Write(const char* text, math::Vec2 pos = {0.0f, 0.0f}, int foreground_color = NORMAL, int background_color = NORMAL, int formating = 10);
-
+	void WriteDirectly(const char* text, math::Vec2 pos = {0.0f, 0.0f}, int foreground_color = NORMAL, int background_color = NORMAL, int formating = 10);
+	void WriteReratively(const char* text, math::Vec2 pos = {0.0f, 0.0f}, int foreground_color = NORMAL, int background_color = NORMAL, int formating = 10);
 
 	void DrawTriangle(math::Vec2 A, math::Vec2 B, math::Vec2 C);
 
@@ -44,6 +44,8 @@ private:
 	void SelectForeground(std::string& text, int value);
 	void SelectBackground(std::string& text, int value);
 	void SelectFormating(std::string& text, int value);
+
+	math::Vec2 ConvertToScreen(math::Vec2 coords);
 
 	bool LineMoveOnX(float a, float b, int step);
 	bool LineMoveOnY(float a, float b, int step);
