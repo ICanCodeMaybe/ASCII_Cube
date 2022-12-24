@@ -37,9 +37,9 @@ public:
 
 	void DrawTriangle(math::Vec2 A, math::Vec2 B, math::Vec2 C);
 
-private:
-
 	void SetCursorPos(std::string& text, math::Vec2 pos);
+
+private:
 
 	void SelectForeground(std::string& text, int value);
 	void SelectBackground(std::string& text, int value);

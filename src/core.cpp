@@ -1,10 +1,13 @@
+#include "core.h"
+
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
+#include <istream>
 #include <sstream>
 
-#include "core.h"
+#include "cubeMath.h"
 #include "renderer.h"
 #include "textFormating.h"
 #include "loger.h"
@@ -18,6 +21,8 @@ float Core::current_time = 0;
 float Core::end_time = 0;
 
 int Core::fps = 30;
+int Core::s_width = 0;
+int Core::s_height = 0;
 
 Core* Core::GetCore(){
 	if(s_instance == nullptr){
@@ -42,11 +47,12 @@ void Core::MainLoop(){
 	
 			Renderer::GetRenderer()->DrawTriangle({1,1},{60,3},{10,30});
 			
-
+			
 			std::stringstream ss;
-			ss << "Time: " << Core::GetCore()->GetTime() << "\n";
+			ss << "Time: " << Core::GetCore()->GetTime() <<", Width: " << Core::s_width<< ", Height:"<< s_height<<"\n";
 			Renderer::GetRenderer()->Write(ss.str().c_str(), {0, 30});
 			end_time = GetTime();
+
 		}
 	
 	}

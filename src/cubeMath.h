@@ -1,3 +1,5 @@
+#ifndef CUBE_MATH
+#define CUBE_MATH
 
 namespace math{
 
@@ -45,3 +47,5 @@ namespace math{
 	};
 
 }
+
+#endif

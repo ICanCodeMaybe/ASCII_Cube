@@ -1,3 +1,7 @@
 cd out/build
-./Cube
+
+WIDTH=`tput cols`
+HEIGHT=`tput lines`
+
+./Cube $WIDTH $HEIGHT
 

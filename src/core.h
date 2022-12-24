@@ -1,6 +1,8 @@
 #ifndef CORE_H
 #define CORE_H
 
+
+
 class Core{
 private:
 	Core(){}
@@ -11,7 +13,7 @@ public:
 	static void SignalHandler(int signal_num);	
 	static void MainLoop();
 	static void Close();
-
+	static void SetWidthHeight(int width, int height){s_width = width; s_height=height;}
 	static float GetTime();
 
 	static float delta_time;
@@ -24,6 +26,9 @@ private:
 	static float start_time;
 
 	static bool app_should_close;
+
+	static int s_width;
+	static int s_height;
 };
 
 #endif
