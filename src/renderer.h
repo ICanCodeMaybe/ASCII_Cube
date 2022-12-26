@@ -28,14 +28,14 @@ public:
 	
 	void Clear();
 	
-	void DrawLine(math::Vec2 begining, math::Vec2 end, const char* filling = "X", int foreground_color = NORMAL, int background_color = NORMAL);
+	virtual void DrawLine(math::Vec2 begining, math::Vec2 end, const char* filling = "X", int foreground_color = NORMAL, int background_color = NORMAL);
 	
 //	void DrawLine(math::Vec2 &begining, int *lenght, int &angle, char filling = 'X', int foreground_color = NORMAL, int background_color = NORMAL);
 
-	void WriteDirectly(const char* text, math::Vec2 pos = {0.0f, 0.0f}, int foreground_color = NORMAL, int background_color = NORMAL, int formating = 10);
-	void WriteReratively(const char* text, math::Vec2 pos = {0.0f, 0.0f}, int foreground_color = NORMAL, int background_color = NORMAL, int formating = 10);
+	virtual void WriteDirectly(const char* text, math::Vec2 pos = {0.0f, 0.0f}, int foreground_color = NORMAL, int background_color = NORMAL, int formating = 10);
+	virtual void WriteReratively(const char* text, math::Vec2 pos = {0.0f, 0.0f}, int foreground_color = NORMAL, int background_color = NORMAL, int formating = 10);
 
-	void DrawTriangle(math::Vec2 A, math::Vec2 B, math::Vec2 C);
+	virtual void DrawTriangle(math::Vec2 A, math::Vec2 B, math::Vec2 C);
 
 	void SetCursorPos(std::string& text, math::Vec2 pos);
 
@@ -47,23 +47,41 @@ private:
 
 	math::Vec2 ConvertToScreen(math::Vec2 coords);
 
-	bool LineMoveOnX(float a, float b, int step);
-	bool LineMoveOnY(float a, float b, int step);
+	virtual bool LineMoveOnX(double a, double b, int step);
+	virtual bool LineMoveOnY(double a, double b, int step);
 };
 
 
-class RendererObject{
+
+class Renderer3D {
 private:
-	int p_pos_x = 0;
-	int p_pos_y = 0;
-
-	int p_foreground_color = 0;
-	int p_background_color = 0;
+	Renderer3D(){}
+	static Renderer3D* s_instance;
 public:
+	Renderer3D* GetRenderer3D();
 
-};
+	void Clear();
+	
+	void DrawLine(math::Vec3 begining, math::Vec3 end, const char* filling = "X", int foreground_color = NORMAL, int background_color = NORMAL);
+	
+// DrawLine(math::Vec2 &begining, int *lenght, int &angle, char filling = 'X', int foreground_color = NORMAL, int background_color = NORMAL);
 
-class Test : RendererObject{
+	void WriteDirectly(const char* text, math::Vec3 pos = {0.0f, 0.0f, 0.0f}, int foreground_color = NORMAL, int background_color = NORMAL, int formating = 10);
+	void WriteReratively(const char* text, math::Vec3 pos = {0.0f, 0.0f, 0.0f}, int foreground_color = NORMAL, int background_color = NORMAL, int formating = 10);
+	void DrawTriangle(math::Vec3 A, math::Vec3 B, math::Vec3 C);
+
+	void SetCursorPos(std::string& text, math::Vec2 pos);
+
+private:
+
+	void SelectForeground(std::string& text, int value);
+	void SelectBackground(std::string& text, int value);
+	void SelectFormating(std::string& text, int value);
+
+	math::Vec3 ConvertToScreen(math::Vec3 coords);
+
+	virtual bool LineMoveOnX(double a, double b, int step);
+	virtual bool LineMoveOnY(double a, double b, int step);
 
 };
 

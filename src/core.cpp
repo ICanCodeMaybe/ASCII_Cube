@@ -32,7 +32,7 @@ Core* Core::GetCore(){
 }
 
 math::Vec2 Core::GetSize(){
-	return {Core::s_width, Core::s_height};
+	return {(float)Core::s_width, (float)Core::s_height};
 }
 void Core::MainLoop(){
 
@@ -43,11 +43,8 @@ void Core::MainLoop(){
 		if(delta_time > 1.0f/fps){
 
 			Renderer::GetRenderer()->Clear();
-			
-
-			Renderer::GetRenderer()->DrawLine({0.5,0.5}, {std::sin(GetTime())/5 + 0.2, std::cos(GetTime()) / 5 + 0.15}, "X");
-	
-			Renderer::GetRenderer()->DrawTriangle({1,1},{0,0},{1,0});
+				
+			Renderer::GetRenderer()->DrawLine({0.0f, 0.0f}, {1,1});
 			
 			Renderer::GetRenderer()->WriteReratively("uprostred",{0.5f, 0.5f});
 			
