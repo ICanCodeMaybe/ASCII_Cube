@@ -247,10 +247,9 @@ void Renderer3D::Clear(){
 }
 
 void Renderer3D::DrawLine( math::Vec3 begining, math::Vec3 end, const char* filling, int foreground_color, int background_color){
-	//begining = ConvertToScreen(begining);
-	//end = ConvertToScreen(end);
+	begining = ConvertToScreen(begining);
+	end = ConvertToScreen(end);
 
-	//return;
 	//sides in right angled triangle 
 	float a =std::abs(begining.y - end.y);
 	float b =std::abs(begining.x - end.x);

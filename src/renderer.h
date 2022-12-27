@@ -58,7 +58,7 @@ private:
 	Renderer3D(){}
 	static Renderer3D* s_instance;
 public:
-	Renderer3D* GetRenderer3D();
+	static Renderer3D* GetRenderer3D();
 
 	void Clear();
 	
