@@ -335,9 +335,10 @@ if(Core::GetCore()->GetSize().GetX() != -1){
 	 * i just subtract it from one
 	 */
 	
-	float y_final = 1.0f - y;
+	float y_final = (1.0f - y) * Core::GetCore()->GetSize().y;
+	float x_final = x * Core::GetCore()->GetSize().x;
 
-	return {x, y_final, vec.z};
+	return {x_final, y_final, vec.z};
 }
 else
 	return vec; 
