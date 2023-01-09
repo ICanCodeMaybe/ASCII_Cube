@@ -341,30 +341,31 @@ namespace math {
 		this->Set(scale.GetZ(), (2 + 2*4));
 	}
 
-	void Mat4::SetRotateMat(const Vec3& axes, const float& angle_in_rad){
+	void Mat4::SetRotateMat(const Vec3& axes, const float& angle){
 		this->SetIdentity();
-
+		
+		float angle_in_rad = angle * (PI / 180);
 		float cosine = cos(angle_in_rad);
 		float sine = sin(angle_in_rad);
 
 		//one minus cosine
-		float omcos = 1 - cosine;
+		float omcosine = 1 - cosine;
 	
 		float x = axes.GetX();
 		float y = axes.GetY();
 		float z = axes.GetZ();
 
-		this->Set(cosine + x*x+omcos, (0 + 0*4));
-		this->Set(x*y*omcos - z*sine, (1 + 0*4));		
-		this->Set(x*z*omcos + y*sine, (2 + 0*4));
+		this->Set(x * x * omcosine + cosine, (0 + 0*4));
+		this->Set(x * y * omcosine + z * sine, (1 + 0*4));		
+		this->Set(x * z * omcosine - y * sine, (2 + 0*4));
 
-		this->Set(y*x*omcos + z*sine, (0 + 1*4));
-		this->Set(cosine + y+y+omcos, (1 + 1*4));
-		this->Set(y*z*omcos - x*sine, (2 + 1*4));
+		this->Set(y * x * omcosine - z * sine, (0 + 1*4));
+		this->Set(y * y * omcosine + cosine, (1 + 1*4));
+		this->Set(y * z * omcosine + x * sine, (2 + 1*4));
 
-		this->Set(z*x*omcos + y*sine, (0 + 2*4));
-		this->Set(z*y*omcos + x*sine, (1 + 2*4));
-		this->Set(cosine + z*z*omcos, (2 + 2*4));		
+		this->Set(z * x * omcosine + y * sine, (0 + 2*4));
+		this->Set(z * y * omcosine - x * sine, (1 + 2*4));
+		this->Set(z * z * omcosine + cosine, (2 + 2*4));		
 
 	}
 

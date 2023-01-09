@@ -39,7 +39,7 @@ void Core::MainLoop(){
 	math::Mat4 rotation;
 	rotation.SetIdentity();
 
-	rotation.SetRotateMat({0.0f, 0.0f, 1.0f}, PI/2);
+	rotation.SetRotateMat({0.0f, 0.0f, 1.0f}, 45.0f);
 	math::Vec3 start(-0.25f, 0.0f, 0.0f);
 	math::Vec3 end(0.25f, 0.0f, 0.0f);
 
@@ -54,6 +54,10 @@ void Core::MainLoop(){
 
 			Renderer3D::GetRenderer3D()->Clear();
 			
+			rotation.SetRotateMat({0.0f, 0.0f, 1.0f}, Core::GetTime() * 2);
+			rot_start = rotation * start;
+			rot_end = rotation * end;
+
 			//Renderer3D::GetRenderer3D()->DrawLine(start, end);	
 			Renderer3D::GetRenderer3D()->DrawLine(rot_start, rot_end);
 			
