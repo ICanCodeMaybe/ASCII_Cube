@@ -3,6 +3,7 @@
 
 #define PI 3.14
 #include "loger.h"
+#include <string>
 
 namespace math{
 
@@ -66,6 +67,42 @@ namespace math{
 
 	};
 
+
+class Vec4{
+	public:
+		float x;
+		float y;
+		float z;
+		float w;
+
+		Vec4(float x, float y, float z, float w);
+		
+		float GetX() const {return x;}
+		float GetY() const {return y;}
+		float GetZ() const {return z;}
+		float GetW() const {return w;}
+
+		float Get(int& pos) const;
+		void Set(float& value, int& pos);
+	
+		void SetX(const float& X){ x = X;}
+		void SetY(const float& Y){ y = Y;}
+		void SetZ(const float& Z){ z = Z;}
+		void SetW(const float& W){ w = W;}
+
+		Vec4 operator+(Vec4& add);
+		Vec4 operator+(float& num);
+		Vec4 operator-(Vec4& sub);
+		Vec4 operator-(float& num);
+		
+		Vec4 operator*(Vec4& add);
+		Vec4 operator*(float& num);
+
+		Vec4 operator/(Vec4& add);
+		Vec4 operator/(float& num);
+
+	};
+
 	class Mat4{
 	public:
 		float* values = new float[4*4];
@@ -82,6 +119,8 @@ namespace math{
 
 		void SetIdentity();
 		void SetNull();
+
+		std::string GetString();
 //------OVERRIDES MATRIX TO ONE OF THESE---
 		void SetTranslateMat(const Vec3& translate);
 		void SetScaleMat(const Vec3& scale);

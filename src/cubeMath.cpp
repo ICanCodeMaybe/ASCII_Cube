@@ -174,6 +174,109 @@ namespace math {
 		vec.z /= num;
 		return vec;
 	}
+//--------------------------------------------
+//-----------VEC4-----------------------------
+//--------------------------------------------
+
+	Vec4::Vec4(float x, float y, float z, float w)
+		:x(x), y(y), z(z), w(w){
+
+	}
+
+	float Vec4::Get(int& pos) const {
+		switch(pos){
+			case 0: return this->GetX(); break;
+			case 1: return this->GetY(); break;
+			case 2: return this->GetZ(); break;
+			case 3: return this->GetW(); break;
+			default: return 0; break;
+		}
+	}
+
+	void Vec4::Set(float& value, int& pos){
+		switch(pos){
+			case 0: this->SetX(value); break;
+			case 1: this->SetY(value); break;
+			case 2: this->SetZ(value); break;
+			case 3: this->SetW(value); break;
+			default: break;
+		}
+	}
+
+	//some operator overloading :)
+	Vec4 Vec4::operator+(Vec4& add){
+		Vec4 vec(this->x, this->y, this->z, this->w);
+		vec.x += add.x;
+		vec.y += add.y;
+		vec.z += add.z;
+		vec.w += add.w;
+		return vec;
+	}
+
+
+	Vec4 Vec4::operator+(float& num){
+		Vec4 vec(this->x, this->y, this->z, this->w);
+		vec.x += num;
+		vec.y += num;
+		vec.z += num;
+		vec.w += num;
+		return vec;
+	}
+
+	Vec4 Vec4::operator-(Vec4& add){
+		Vec4 vec(this->x, this->y, this->z, this->w);
+		vec.x -= add.x;
+		vec.y -= add.y;
+		vec.z -= add.z;
+		vec.w -= add.w;
+		return vec;
+	}
+
+	Vec4 Vec4::operator-(float& num){
+		Vec4 vec(this->x, this->y, this->z, this->w);
+		vec.x -= num;
+		vec.y -= num;
+		vec.z -= num;
+		vec.w -= num;
+		return vec;
+	}
+
+	Vec4 Vec4::operator*(Vec4& add){
+		Vec4 vec(this->x, this->y, this->z, this->w);
+		vec.x *= add.x;
+		vec.y *= add.y;
+		vec.z *= add.z;
+		vec.w *= add.w;
+		return vec;
+	}
+
+	Vec4 Vec4::operator*(float& num){
+		Vec4 vec(this->x, this->y, this->z, this->w);
+		vec.x *= num;
+		vec.y *= num;
+		vec.z *= num;
+		vec.w *= num;
+		return vec;
+	}
+
+	Vec4 Vec4::operator/(Vec4& add){
+		Vec4 vec(this->x, this->y, this->z, this->w);
+		vec.x /= add.x;
+		vec.y /= add.y;
+		vec.z /= add.z;
+		vec.w /= add.w;
+		return vec;
+	}
+
+	Vec4 Vec4::operator/(float& num){
+		Vec4 vec(this->x, this->y, this->z, this->w);
+		vec.x /= num;
+		vec.y /= num;
+		vec.z /= num;
+		vec.w /= num;
+		return vec;
+	}
+
 
 //#########################################################
 //######----MATRIXES----###################################
@@ -191,6 +294,17 @@ namespace math {
 		delete this;
 	}
 
+	std::string Mat4::GetString(){
+		std::stringstream ss;
+
+		for(int i = 0; i < 4; i++){
+			for(int k = 0; k < 4; k++){
+				ss << this->Get(k + i*4) << ", ";
+			}
+			ss << "\n";
+		}
+		return ss.str();
+	}
 
 	//SET section
 
@@ -205,7 +319,7 @@ namespace math {
 	}
 
 	void Mat4::SetNull(){
-		for(int i = 0; i < (sizeof(values)/sizeof(float)); i++){
+		for(int i = 0; i < 16; i++){
 			this->values[i] = 0;
 		}
 	}
@@ -324,21 +438,19 @@ namespace math {
 
 	//TODO: Create Vec4, and make this compatible with Vec4
 	Vec3 Mat4::operator*(const Vec3& add){
-		Vec3 vec(0.0f, 0.0f, 0.0f);
+		Vec4 vec(add.x, add.y, add.z, 1.0f);
+		Vec4 ret(0.0f, 0.0f, 0.0f, 0.0f); 
 		//this for-loop changes the row in add Mat4
 		for(int i = 0; i <4 ; i++){
 				//this for-loop, just calculates the dot product of row and column
 			float dot = 0;
 			for(int m = 0; m <4; m++){
-				//so Vec3 doesnt overflow
-				int x = (m == 3 ) ? 2 : m;
-				dot += this->Get(m + i*3) * add.Get(x);
+				dot += this->Get(m + i*4) * vec.Get(m);
 			}
-
-			if(i<3)
-				vec.Set(dot, i);
+		
+			ret.Set(dot, i);
 		}
 
-		return vec;
+		return {ret.x, ret.y, ret.z};
 	}
 }

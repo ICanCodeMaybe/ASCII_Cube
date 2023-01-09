@@ -37,8 +37,9 @@ math::Vec2 Core::GetSize(){
 void Core::MainLoop(){
 
 	math::Mat4 rotation;
-	rotation.SetTranslateMat({0.0f, 0.0f, 0.0f});
+	rotation.SetIdentity();
 
+	rotation.SetRotateMat({0.0f, 0.0f, 1.0f}, PI/2);
 	math::Vec3 start(0.25f, 0.5f, 0.0f);
 	math::Vec3 end(0.75f, 0.5f, 0.0f);
 
@@ -53,13 +54,13 @@ void Core::MainLoop(){
 
 			Renderer3D::GetRenderer3D()->Clear();
 			
-			Renderer3D::GetRenderer3D()->DrawLine(start, end);	
+			//Renderer3D::GetRenderer3D()->DrawLine(start, end);	
 			Renderer3D::GetRenderer3D()->DrawLine(rot_start, rot_end);
 			
 			Renderer3D::GetRenderer3D()->WriteReratively("uprostred",{0.5f, 0.5f, 0.0f});
 			
 			std::stringstream ss;
-			ss << "Time: " << Core::GetCore()->GetTime() <<", Width: " << Core::s_width<< ", Height:"<< s_height<<"\n";
+			ss << "Time: " << Core::GetCore()->GetTime() <<", X: " << rot_start.x << ", Y:"<< rot_start.y << "\nMat:\n" << rotation.GetString().c_str() <<"\n";
 			Renderer3D::GetRenderer3D()->WriteDirectly(ss.str().c_str(), {0, 30, 0});
 			end_time = GetTime();
 
