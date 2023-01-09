@@ -151,10 +151,21 @@ bool Renderer::LineMoveOnY(double a, double b, int step){
 		return false;
 }
 math::Vec2 Renderer::ConvertToScreen(math::Vec2 vec){
+
 if(Core::GetCore()->GetSize().GetX() != -1){
-	float width = Core::GetCore()->GetSize().x * vec.x;
-	float height = Core::GetCore()->GetSize().y *vec.y;
-	return {width, height};
+
+	// with + 1 / 2, i can get the coordinate from interval <-1, 1> to interval <0.0, 1.0>
+	float x = (vec.x + 1) / 2;
+	float y = (vec.y + 1) / 2; 
+
+	/*
+	 * now, the (0,0) coordinate is in left-down, corner and i need it to get to the left-up corner, so
+	 * i just subtract it from one
+	 */
+	
+	float y_final = 1.0f - y;
+
+	return {x, y_final};
 }
 else
 	return vec; 
@@ -312,10 +323,21 @@ bool Renderer3D::LineMoveOnY(double a, double b, int step){
 		return false;
 }
 math::Vec3 Renderer3D::ConvertToScreen(math::Vec3 vec){
+
 if(Core::GetCore()->GetSize().GetX() != -1){
-	float width = Core::GetCore()->GetSize().x * vec.x;
-	float height = Core::GetCore()->GetSize().y *vec.y;
-	return {width, height, vec.z};
+
+	// with + 1 / 2, i can get the coordinate from interval <-1, 1> to interval <0.0, 1.0>
+	float x = (vec.x + 1) / 2;
+	float y = (vec.y + 1) / 2; 
+
+	/*
+	 * now, the (0,0) coordinate is in left-down, corner and i need it to get to the left-up corner, so
+	 * i just subtract it from one
+	 */
+	
+	float y_final = 1.0f - y;
+
+	return {x, y_final, vec.z};
 }
 else
 	return vec; 
