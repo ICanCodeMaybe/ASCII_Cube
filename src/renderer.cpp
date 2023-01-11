@@ -1,5 +1,7 @@
 #include "renderer.h"
 #include "core.h"
+#include "cubeMath.h"
+#include "cubeObjects.h"
 #include "loger.h"
 
 #include <cmath>
@@ -346,8 +348,25 @@ else
 
 //-------TRIANGLES---------------
 
-void Renderer3D::DrawTriangle(math::Vec3 A, math::Vec3 B, math::Vec3 C){
-	DrawLine(A, B);
-	DrawLine(A, C);
-	DrawLine(B, C);
+void Renderer3D::DrawTriangle(Triangle& triangle, math::Mat4* mat){
+	bool should_be_deleted = false;
+
+	if(!mat){
+		mat = new math::Mat4();
+		mat->SetIdentity();
+
+		should_be_deleted = true; //TODO:i should use some smart pointer, but im currently lazy to do that
+	}
+	
+	math::Vec3 a = *mat * triangle.A;
+	math::Vec3 b = *mat * triangle.B;
+	math::Vec3 c = *mat * triangle.C;
+
+	DrawLine(a,b);
+	DrawLine(a,c);
+	DrawLine(b,c);
+
+	if(should_be_deleted){
+		delete mat;
+	}
 }

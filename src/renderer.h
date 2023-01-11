@@ -1,8 +1,10 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
-#include <string>
 #include "cubeMath.h"
+#include "cubeObjects.h"
+
+#include <string>
 #include "math.h"
 
 #define NORMAL -1
@@ -68,7 +70,7 @@ public:
 
 	void WriteDirectly(const char* text, math::Vec3 pos = {0.0f, 0.0f, 0.0f}, int foreground_color = NORMAL, int background_color = NORMAL, int formating = 10);
 	void WriteReratively(const char* text, math::Vec3 pos = {0.0f, 0.0f, 0.0f}, int foreground_color = NORMAL, int background_color = NORMAL, int formating = 10);
-	void DrawTriangle(math::Vec3 A, math::Vec3 B, math::Vec3 C);
+	void DrawTriangle(Triangle& triangle, math::Mat4* mat = nullptr);
 
 	void SetCursorPos(std::string& text, math::Vec2 pos);
 

@@ -8,6 +8,7 @@
 #include <sstream>
 
 #include "cubeMath.h"
+#include "cubeObjects.h"
 #include "renderer.h"
 #include "textFormating.h"
 #include "loger.h"
@@ -39,12 +40,15 @@ void Core::MainLoop(){
 	math::Mat4 rotation;
 	rotation.SetIdentity();
 
-	rotation.SetRotateMat({0.0f, 0.0f, 1.0f}, 45.0f);
+	rotation.SetRotateMat({0.0f, 1.0f, 0.0f}, 45.0f);
 	math::Vec3 start(-0.25f, 0.0f, 0.0f);
 	math::Vec3 end(0.25f, 0.0f, 0.0f);
 
-	math::Vec3 rot_start = rotation*start;
-	math::Vec3 rot_end = rotation*end;
+	math::Vec3 A(-0.5f, -0.5f, 0.0f);
+	math::Vec3 B(0.5f, -0.5f, 0.0f);
+	math::Vec3 C(0.0f, 0.5f, 0.0f);
+
+	Triangle triangle(A, B, C);
 
 	while(!app_should_close){
 		current_time = GetTime();
@@ -54,17 +58,16 @@ void Core::MainLoop(){
 
 			Renderer3D::GetRenderer3D()->Clear();
 			
-			rotation.SetRotateMat({0.0f, 0.0f, 1.0f}, Core::GetTime() * 2);
-			rot_start = rotation * start;
-			rot_end = rotation * end;
+			rotation.SetRotateMat({0.0f, 1.0f, 0.0f}, Core::GetTime() * 6);
 
-			//Renderer3D::GetRenderer3D()->DrawLine(start, end);	
-			Renderer3D::GetRenderer3D()->DrawLine(rot_start, rot_end);
-			
+			Renderer3D::GetRenderer3D()->DrawTriangle(triangle, &rotation);	
+
+			Renderer3D::GetRenderer3D()->DrawLine({-0.5f, -0.5f, 0.0f}, {0.0f, 0.5f, 0.0f});//There is problem in DrawLine
+
 			Renderer3D::GetRenderer3D()->WriteReratively("uprostred",{0.0f, 0.0f, 0.0f});
 			
 			std::stringstream ss;
-			ss << "Time: " << Core::GetCore()->GetTime() <<", X: " << rot_start.x << ", Y:"<< rot_start.y << "\nMat:\n" << rotation.GetString().c_str() <<"\n";
+			ss << "Time: " << Core::GetCore()->GetTime() <<"\nMat:\n" << rotation.GetString().c_str() <<"\n";
 			Renderer3D::GetRenderer3D()->WriteDirectly(ss.str().c_str(), {0, 30, 0});
 			end_time = GetTime();
 
