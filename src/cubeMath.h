@@ -64,7 +64,8 @@ namespace math{
 
 		Vec3 operator/(Vec3& add);
 		Vec3 operator/(float& num);
-
+	
+		const char* GetWritten();
 	};
 
 

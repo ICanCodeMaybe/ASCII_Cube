@@ -14,7 +14,7 @@ namespace logger{
 		std::cout << CLEAR_SCREEN << YELLOW_TEXT << message << "\n";
 	}
 	void info(const char* message){
-		std::cout << CLEAR_SCREEN << NORMAL_TEXT << message << "\n";
+		std::cout << NORMAL_TEXT << message << "\n";
 	}
 	void assert(bool statement, const char* message){
 		if(statement){

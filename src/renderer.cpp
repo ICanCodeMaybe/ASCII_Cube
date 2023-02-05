@@ -298,8 +298,34 @@ void Renderer3D::DrawLine( math::Vec3 begining, math::Vec3 end, const char* fill
 		Renderer3D::WriteDirectly(filling, {begining.x + x , begining.y + y, begining.z}, foreground_color, background_color);
 	
 	}
-
+	
 }
+	//Digital diferential algorithm(DDA)
+	void Renderer3D::NewDrawLine(math::Vec3 begining, math::Vec3 end, const char* filling, int foreground_color, int background_color){ 
+		math::Vec3 Beg = ConvertToScreen(begining); // coordinates converted to screen (sorry, i havent thought of better name)
+		math::Vec3 End = ConvertToScreen(end); 
+
+		int delta_x = End.x - Beg.x;
+		int delta_y = End.y - Beg.y;
+
+		int length = (abs(delta_x) > abs(delta_y))? abs(delta_x):abs(delta_y);
+
+		float pomer_x = (float)delta_x/length;
+		float pomer_y = (float)delta_y/length;
+
+		float x = Beg.x;
+		float y = Beg.y;
+		for(int i = 0; i < length; i++){
+			x += pomer_x;
+			y += pomer_y;
+
+			Renderer3D::WriteDirectly("X", {round(x),round(y), begining.z}, foreground_color, background_color);
+
+		}
+		
+	}
+
+
 //-------------private-------------------
 bool Renderer3D::LineMoveOnX(double a, double b, int relative_step){
 	//ratio of sides in triangle
@@ -351,7 +377,7 @@ else
 void Renderer3D::DrawTriangle(Triangle& triangle, math::Mat4* mat){
 	bool should_be_deleted = false;
 
-	if(!mat){
+	if(mat == nullptr){
 		mat = new math::Mat4();
 		mat->SetIdentity();
 
@@ -362,11 +388,12 @@ void Renderer3D::DrawTriangle(Triangle& triangle, math::Mat4* mat){
 	math::Vec3 b = *mat * triangle.B;
 	math::Vec3 c = *mat * triangle.C;
 
-	DrawLine(a,b);
-	DrawLine(a,c);
-	DrawLine(b,c);
+	NewDrawLine(a,b);
+	NewDrawLine(a,c);
+	NewDrawLine(b,c);
 
 	if(should_be_deleted){
 		delete mat;
 	}
 }
+

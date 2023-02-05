@@ -65,12 +65,12 @@ public:
 	void Clear();
 	
 	void DrawLine(math::Vec3 begining, math::Vec3 end, const char* filling = "X", int foreground_color = NORMAL, int background_color = NORMAL);
-	
+	void NewDrawLine(math::Vec3 begining, math::Vec3 end, const char* filling = "X", int foreground_color = NORMAL, int background_color = NORMAL);
 // DrawLine(math::Vec2 &begining, int *lenght, int &angle, char filling = 'X', int foreground_color = NORMAL, int background_color = NORMAL);
 
 	void WriteDirectly(const char* text, math::Vec3 pos = {0.0f, 0.0f, 0.0f}, int foreground_color = NORMAL, int background_color = NORMAL, int formating = 10);
 	void WriteReratively(const char* text, math::Vec3 pos = {0.0f, 0.0f, 0.0f}, int foreground_color = NORMAL, int background_color = NORMAL, int formating = 10);
-	void DrawTriangle(Triangle& triangle, math::Mat4* mat = nullptr);
+	void DrawTriangle(Triangle& triangle, math::Mat4* mat);
 
 	void SetCursorPos(std::string& text, math::Vec2 pos);
 

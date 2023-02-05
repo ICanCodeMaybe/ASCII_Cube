@@ -79,7 +79,7 @@ namespace math {
 		ss << "X: " << Vec2::x << ", Y:" << Vec2::y;
 		const char* message = ss.str().c_str();
 		Renderer::GetRenderer()->WriteDirectly(message, {0,0});
-		return ss.str().c_str();
+		return message;
 	}
 //-----------------------------------------------------
 //----------------VEC3---------------------------------
@@ -173,6 +173,14 @@ namespace math {
 		vec.y /= num;
 		vec.z /= num;
 		return vec;
+	}
+
+	const char* Vec3::GetWritten(){
+		std::stringstream ss;
+		ss << "X: " << Vec3::x << ", Y:" << Vec3::y << "Z: " << Vec3::z;
+		const char* message = ss.str().c_str();
+		Renderer::GetRenderer()->WriteDirectly(message, {0,0});
+		return message;
 	}
 //--------------------------------------------
 //-----------VEC4-----------------------------

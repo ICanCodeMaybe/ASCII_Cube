@@ -50,6 +50,15 @@ void Core::MainLoop(){
 
 	Triangle triangle(A, B, C);
 
+	float points [3*4] = { -0.5f, -0.5f, 0.0f,
+		-0.5f, 0.5f, 0.0f,
+		0.5f, -0.5f, 0.0f,
+		0.5f, 0.5f, 0.0f};
+
+	int indecies[3*2] = { 	0, 1, 2,
+				1, 2, 3};
+
+
 	while(!app_should_close){
 		current_time = GetTime();
 		delta_time = current_time - end_time;
@@ -57,20 +66,18 @@ void Core::MainLoop(){
 		if(delta_time > 1.0f/fps){
 
 			Renderer3D::GetRenderer3D()->Clear();
-			
+		
+			//calculating
 			rotation.SetRotateMat({0.0f, 1.0f, 0.0f}, Core::GetTime() * 6);
 
+			//Drawing
 			Renderer3D::GetRenderer3D()->DrawTriangle(triangle, &rotation);	
 
-			Renderer3D::GetRenderer3D()->DrawLine({-0.5f, -0.5f, 0.0f}, {0.0f, 0.5f, 0.0f});//There is problem in DrawLine
-
-			Renderer3D::GetRenderer3D()->WriteReratively("uprostred",{0.0f, 0.0f, 0.0f});
-			
+			//Logging
 			std::stringstream ss;
-			ss << "Time: " << Core::GetCore()->GetTime() <<"\nMat:\n" << rotation.GetString().c_str() <<"\n";
+			ss << "Time: " << Core::GetCore()->GetTime()<<"\n";
 			Renderer3D::GetRenderer3D()->WriteDirectly(ss.str().c_str(), {0, 30, 0});
-			end_time = GetTime();
-
+			end_time = GetTime();		
 		}
 	
 	}
