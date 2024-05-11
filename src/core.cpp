@@ -36,7 +36,7 @@ math::Vec2 Core::GetSize(){
 	return {(float)Core::s_width, (float)Core::s_height};
 }
 void Core::MainLoop(){
-
+  Renderer::GetRenderer()->WriteDirectly("Whuaa");
 	math::Mat4 rotation;
 	rotation.SetIdentity();
 
@@ -50,15 +50,19 @@ void Core::MainLoop(){
 
 	Triangle triangle(A, B, C);
 
-	float points [3*4] = { -0.5f, -0.5f, 0.0f,
+	float points [3*4] = { 
+    -0.5f, -0.5f, 0.0f,
 		-0.5f, 0.5f, 0.0f,
 		0.5f, -0.5f, 0.0f,
 		0.5f, 0.5f, 0.0f};
 
-	int indecies[3*2] = { 	0, 1, 2,
+	int indecies[3*2] = { 	
+        0, 1, 2,
 				1, 2, 3};
-
-
+  Renderer::GetRenderer()->WriteDirectly("Whuaa");
+  PolyObject poly(points, indecies, 6);
+  
+  Renderer::GetRenderer()->WriteDirectly("Whuaa");
 	while(!app_should_close){
 		current_time = GetTime();
 		delta_time = current_time - end_time;
@@ -71,7 +75,9 @@ void Core::MainLoop(){
 			rotation.SetRotateMat({0.0f, 1.0f, 0.0f}, Core::GetTime() * 6);
 
 			//Drawing
-			Renderer3D::GetRenderer3D()->DrawTriangle(triangle, &rotation);	
+			Renderer3D::GetRenderer3D()->DrawTriangle(triangle, &rotation);
+			rotation.SetRotateMat({1.0f, 1.0f, 0.0f}, Core::GetTime() * 18);
+      Renderer3D::GetRenderer3D()->DrawPoly(poly, &rotation);
 
 			//Logging
 			std::stringstream ss;

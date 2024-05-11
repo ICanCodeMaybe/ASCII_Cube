@@ -237,18 +237,21 @@ void Renderer3D::SetCursorPos(std::string& text, math::Vec2 pos){
 }
 
 void Renderer3D::WriteDirectly(const char* text, math::Vec3 pos, int foreground_color, int background_color, int formating){
-	
-	std::stringstream ss;
-	ss << text;
-	std::string final_string = ss.str();
 
-	Renderer3D::SetCursorPos(final_string, {pos.x, pos.y});
-
-	Renderer3D::SelectForeground(final_string, foreground_color);
-	Renderer3D::SelectBackground(final_string, background_color);
-	Renderer3D::SelectFormating(final_string, formating);
-
-	std::cout << final_string << NORMAL_TEXT << BACKGROUND_NORMAL;
+  if( pos.x < Core::GetCore()->GetSize().x+1 && pos.x > -1 
+      &&  pos.y < Core::GetCore()->GetSize().y+1 && pos.y > -1){
+    std::stringstream ss;
+   	ss << text;
+   	std::string final_string = ss.str();
+   
+   	Renderer3D::SetCursorPos(final_string, {pos.x, pos.y});
+   
+   	Renderer3D::SelectForeground(final_string, foreground_color);
+   	Renderer3D::SelectBackground(final_string, background_color);
+   	Renderer3D::SelectFormating(final_string, formating);
+   
+   	std::cout << final_string << NORMAL_TEXT << BACKGROUND_NORMAL;
+  }
 }
 
 void Renderer3D::WriteReratively(const char* text, math::Vec3 pos, int foreground_color, int background_color, int formating){
@@ -258,7 +261,7 @@ void Renderer3D::WriteReratively(const char* text, math::Vec3 pos, int foregroun
 void Renderer3D::Clear(){
 	Renderer3D::WriteDirectly(CLEAR_SCREEN);
 }
-
+//TODO: Make to colors work
 void Renderer3D::DrawLine( math::Vec3 begining, math::Vec3 end, const char* filling, int foreground_color, int background_color){
 	begining = ConvertToScreen(begining);
 	end = ConvertToScreen(end);
@@ -395,5 +398,11 @@ void Renderer3D::DrawTriangle(Triangle& triangle, math::Mat4* mat){
 	if(should_be_deleted){
 		delete mat;
 	}
+}
+
+void Renderer3D::DrawPoly(PolyObject& poly, math::Mat4* mat){
+  for(int i = 0; i < poly.GetNumTriangles(); i++){
+    DrawTriangle(*poly.GetTriangleAt(i), mat);
+  }
 }
 

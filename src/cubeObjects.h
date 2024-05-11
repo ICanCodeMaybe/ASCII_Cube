@@ -37,24 +37,27 @@ public:
 
 class Triangle : Object{
 public:
-	math::Vec3& A;
-	math::Vec3& B;
-	math::Vec3& C;
+	math::Vec3 A;
+	math::Vec3 B;
+	math::Vec3 C;
 
-	Triangle(math::Vec3& A, math::Vec3& B, math::Vec3& C, ObjectParameters color = NORMAL, ObjectParameters filling = ONLY_LINES);
+	Triangle(math::Vec3 A, math::Vec3 B, math::Vec3 C, ObjectParameters color = NORMAL, ObjectParameters filling = ONLY_LINES);
 };
 
 
 class PolyObject : Object{
 public:
 	PolyObject(float* vertecies, int* indecies, int num_of_indecies, ObjectParameters color = NORMAL, ObjectParameters filling = NORMAL);
-	Triangle GetTriangleAt(int position);
+  ~PolyObject();
+  Triangle* GetTriangleAt(int position);
 
+  int GetNumTriangles() { return m_num_of_triangles;}
 private:
 	float* m_vertecies;
 	int* m_indecies;
 
-	int m_num_of_triangles;
+  Triangle** m_triangles;
+  int m_num_of_triangles;
 };
 
 #endif

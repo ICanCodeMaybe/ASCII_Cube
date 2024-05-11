@@ -12,6 +12,8 @@ int main(int argc, char* argv[]){
 		Core::GetCore()->SetWidthHeight(std::stoi(argv[1]), std::stoi(argv[2]));
 	else
 		Core::GetCore()->SetWidthHeight(-1,-1);
+ 
+  std::cout<<"Whut\n";
 	Core::GetCore()->MainLoop();
 	return 0;
 }

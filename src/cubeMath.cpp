@@ -299,7 +299,7 @@ namespace math {
 	}
 	
 	Mat4::~Mat4(){
-		delete this;
+		delete[] values;
 	}
 
 	std::string Mat4::GetString(){
